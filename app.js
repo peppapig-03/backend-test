@@ -1,11 +1,13 @@
-import express from "express"
-import router from "./routes/route1.js"
+import express, { urlencoded } from "express"
+import router from "./routes/users.js"
 const app=express()
-app.use("/routers",router)
-const PORT = 4000
-app.listen(PORT, (error)=>{
-    if (error){
-        throw error
-    }
-    console.log(`First Express app - listen on port ${PORT}`)
+app.use(express.static("public"))
+app.use(express.urlencoded({ extended:true}))
+app.set("view engine", "ejs")
+app.listen(3000)
+app.get("/", (req,res)=>{
+    console.log("Here")
+    res.render("index", {text2: "World"})
 })
+
+app.use("/users", router)
